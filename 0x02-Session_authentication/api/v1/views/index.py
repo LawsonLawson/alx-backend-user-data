@@ -1,0 +1,57 @@
+#!/usr/bin/env python3
+"""Module of Index views
+"""
+
+from flask import jsonify, abort
+from api.v1.views import app_views
+
+
+@app_views.route('/status', methods=['GET'], strict_slashes=False)
+def status() -> str:
+    """GET /api/v1/status
+
+    Returns:
+        - the status of the API
+    """
+    return jsonify({"status": "OK"})
+
+
+@app_views.route('/stats/', methods=['GET'], strict_slashes=False)
+def stats() -> str:
+    """GET /api/v1/stats
+
+    Returns:
+        - A JSON response containing the count of each object type in the
+        system.
+
+    Note:
+        Currently, this implementation only returns the count of users.
+    """
+    from models.user import User
+    stats = {}
+    stats['users'] = User.count()
+    return jsonify(stats)
+
+
+@app_views.route('/unauthorized/', methods=['GET'], strict_slashes=False)
+def unauthorized() -> None:
+    """GET /api/v1/unauthorized
+
+    Triggers an unauthorized error (HTTP 401).
+
+    Returns:
+        - A 401 Unauthorized error response.
+    """
+    abort(401)
+
+
+@app_views.route('/forbidden/', methods=['GET'], strict_slashes=False)
+def forbidden() -> None:
+    """GET /api/v1/forbidden
+
+    Triggers a forbidden error (HTTP 403).
+
+    Returns:
+        - A 403 Forbidden error response.
+    """
+    abort(403)
