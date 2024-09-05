@@ -7,14 +7,15 @@ from os import getenv
 
 class Auth:
     """Class to manage the API authentication methods."""
-    
+
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """
         Determine if a given path requires authentication.
 
         Args:
             path (str): The path to check.
-            excluded_paths (List[str]): A list of paths that don't require authentication.
+            excluded_paths (List[str]): A list of paths that don't require
+            authentication.
 
         Returns:
             bool: True if the path requires authentication, False otherwise.
